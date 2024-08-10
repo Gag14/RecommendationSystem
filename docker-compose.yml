@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  generator_service:
+    build: ./generator_service
+    ports:
+      - "5000:5000"
+
+  invoker_service:
+    build: ./invoker_service
+    ports:
+      - "5001:5001"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
